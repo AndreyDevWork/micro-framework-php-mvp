@@ -1,4 +1,5 @@
 <?php
+
 $posts = [
   1 => [
     'title' => 'Title1',
@@ -20,12 +21,8 @@ $posts = [
       'desc' => '4Some quick example text to build on the card title and make up the bulk of the card',
       'slug' => 'title-4',
   ],
-  5 => [
-      'title' => 'Title5',
-      'desc' => '5Some quick example text to build on the card title and make up the bulk of the card',
-      'slug' => 'title-5',
-  ]
 ];
+
 
 
 $recentPosts = [
@@ -39,4 +36,4 @@ $recentPosts = [
   ]
 ];
 
-require_once 'index.tpl.php';
+require 'app/views/index.tpl.php';

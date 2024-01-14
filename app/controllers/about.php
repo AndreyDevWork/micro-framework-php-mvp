@@ -1,5 +1,4 @@
 <?php
-require 'funcs.php';
 
 $title = 'About';
 $content = '
@@ -21,4 +20,4 @@ $recentPosts = [
     ]
 ];
 
-require 'app/views/about.tpl.php';
+require VIEWS . '/about.tpl.php';

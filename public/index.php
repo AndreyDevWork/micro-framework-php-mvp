@@ -9,4 +9,14 @@ define("PATH", "http://" . $_SERVER['HTTP_HOST']);
 
 require CORE . '/funcs.php';
 
-require CONTROLLERS . '/index.php';
+$uri = trim(parse_url($_SERVER['REQUEST_URI'])['path'], '/');
+
+if ($uri === '') {
+    require CONTROLLERS . '/index.php';
+} elseif ($uri == 'about') {
+    require CONTROLLERS . '/about.php';
+} else {
+    abort();
+}
+
+

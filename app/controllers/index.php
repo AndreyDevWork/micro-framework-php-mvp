@@ -1,5 +1,6 @@
 <?php
 
+
 $posts = [
   1 => [
     'title' => 'Title1',
@@ -23,8 +24,6 @@ $posts = [
   ],
 ];
 
-
-
 $recentPosts = [
   1 => [
       'title' => 'Ti tl e4',
@@ -36,4 +35,4 @@ $recentPosts = [
   ]
 ];
 
-require 'app/views/index.tpl.php';
+require VIEWS . '/index.tpl.php';

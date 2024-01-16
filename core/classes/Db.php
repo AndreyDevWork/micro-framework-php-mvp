@@ -40,9 +40,13 @@ final class Db
 
     public function query($query, $params = [])
     {
-        $this->stmt = $this->connection->prepare($query);
-        $this->stmt->execute($params);
-        return $this;
+        try {
+            $this->stmt = $this->connection->prepare($query);
+            $this->stmt->execute($params);
+            return $this;
+        } catch (PDOException $e) {
+            return false;
+        }
     }
 
     public function findAll()

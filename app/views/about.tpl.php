@@ -1,10 +1,14 @@
-<?php require VIEWS . '/incs/header.php' ?>
+<?php
+/** @var String $content */
+
+require VIEWS . '/incs/header.php'
+?>
 
 <main class="main py-3">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-              <?= $content ?>
+              <?= h($content) ?>
             </div>
             <?php require VIEWS . '/incs/sidebar.php'?>
         </div>

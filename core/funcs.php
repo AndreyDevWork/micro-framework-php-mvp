@@ -50,3 +50,10 @@ function redirect($url = '')
     header("Location: {$redirect}");
     die;
 }
+
+function print_arr($data)
+{
+    echo "<pre>";
+    print_r($data);
+    echo "</pre>";
+}

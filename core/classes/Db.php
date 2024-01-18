@@ -45,7 +45,7 @@ final class Db
             $this->stmt->execute($params);
             return $this;
         } catch (PDOException $e) {
-            echo false;
+            return false;
         }
     }
 

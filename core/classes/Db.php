@@ -1,4 +1,9 @@
 <?php
+namespace Core;
+use PDO;
+use PDOException;
+use PDOStatement;
+
 final class Db
 {
 

@@ -1,5 +1,6 @@
 <?php
-require_once CORE . '/classes/Validator.php';
+use Core\Validator;
+
 /** @var Db $db */
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {

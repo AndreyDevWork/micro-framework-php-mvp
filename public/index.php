@@ -1,8 +1,8 @@
 <?php
-require dirname(__DIR__) . '/config/config.php';
-require CORE . '/funcs.php';
+use Core\Db;
 
-require CORE . '/classes/Db.php';
+require_once '../vendor/autoload.php';
+require dirname(__DIR__) . '/config/config.php';
 
 $db_config = require CONFIG . '/db.php';
 $db = Db::getInstance()->getConnection($db_config);

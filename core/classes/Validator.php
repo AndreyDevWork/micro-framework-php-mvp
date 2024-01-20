@@ -5,18 +5,21 @@ namespace Core;
 class Validator
 {
     protected $errors = [];
-    protected $rulesList = ['required', 'min', 'max', 'email'];
+    protected $data_items;
+    protected $rulesList = ['required', 'min', 'max', 'email', 'match'];
     protected $messages = [
         'required' => 'The :fieldname: field is required',
         'min' => 'The :fieldname: field must be minimum :rulevalue: characters',
         'max' => 'The :fieldname: field must be maximum :rulevalue: characters',
         'email' => 'The :fieldname: is not valid email',
+        'match' => 'The :fieldname: field must match :rulevalue: field'
     ];
 
     public function validate(array $data = [], array $rules = [])
     {
+        $this->data_items = $data;
         foreach ($data as $fieldname => $value) {
-            if(in_array($fieldname, array_keys($rules))) {
+            if(isset($rules[$fieldname])) {
                 $this->check([
                     'fieldname' => $fieldname,
                     'value' => $value,
@@ -48,11 +51,6 @@ class Validator
         }
     }
 
-    protected function addError($fieldName, $error)
-    {
-        $this->errors[$fieldName][] = $error;
-    }
-
     public function getErrors ()
     {
         return $this->errors;
@@ -61,6 +59,25 @@ class Validator
     public function hasErrors()
     {
         return !empty($this->errors);
+    }
+
+    public function listErrors($fildname)
+    {
+        $output = '';
+        if (isset($this->errors[$fildname])) {
+            $output .=
+            '<div class="invalid-feedback d-block"><ul class="list-unstyled">';
+                foreach ($this->errors[$fildname] as $error) {
+                    $output .= "<li>{$error}</li>";
+                }
+            $output .= '</ul></div>';
+        }
+        return $output;
+    }
+
+    protected function addError($fieldName, $error)
+    {
+        $this->errors[$fieldName][] = $error;
     }
 
     protected function required($value, $ruleValue)
@@ -80,5 +97,10 @@ class Validator
     protected function email($value, $ruleValue)
     {
         return filter_var($value, FILTER_VALIDATE_EMAIL);
+    }
+
+    protected function match($value, $ruleValue)
+    {
+        return $value === $this->data_items[$ruleValue];
     }
 }

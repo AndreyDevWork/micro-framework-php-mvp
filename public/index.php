@@ -1,6 +1,8 @@
 <?php
 use Core\Db;
 
+session_start();
+
 require_once '../vendor/autoload.php';
 require dirname(__DIR__) . '/config/config.php';
 

@@ -1,7 +1,7 @@
 <?php
 use Core\Validator;
 
-/** @var Db $db */
+/** @var \Core\Db $db */
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -27,15 +27,13 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         ],
     ]);
 
-    if ($validation->hasErrors()) {
-        print_arr($validation->getErrors());
-    } else {
+    if (!$validation->hasErrors()) {
         if($db->query("INSERT INTO posts (`title`, `content`, `excerpt`) VALUES (:title, :content, :excerpt)", $data)) {
-            redirect('/');
-
+            $_SESSION['success'] = "Ok";
         } else {
-            echo 'DB Error';
+            $_SESSION['error'] = 'DB Error';
         }
+//        redirect();
     }
 }
 

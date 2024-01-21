@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <h1>New Post</h1>
-            <form action="" method="post">
+            <form action="/posts" method="post">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
                     <input name="title" type="text" class="form-control" id="title" placeholder="Title" value="<?= old('title') ?>">

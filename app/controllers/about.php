@@ -1,5 +1,5 @@
 <?php
-
+global $db;
 /** @var Db $db */
 
 $content = '

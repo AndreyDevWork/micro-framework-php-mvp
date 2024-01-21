@@ -1,4 +1,5 @@
 <?php
+global $db;
 /** @var Db $db */
 
 
@@ -7,4 +8,4 @@ $post = $db->query("SELECT * FROM posts WHERE id = :id", [':id' => $id])->findOr
 
 
 $title = "My Blog :: {$post["title"]}";
-require VIEWS . '/post.tpl.php';
+require VIEWS . '/posts/show.tpl.php';

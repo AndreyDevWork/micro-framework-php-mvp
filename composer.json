@@ -8,5 +8,7 @@
       "core/funcs.php"
     ]
   },
-  "require": {}
+  "require": {
+    "ext-pdo": "*"
+  }
 }

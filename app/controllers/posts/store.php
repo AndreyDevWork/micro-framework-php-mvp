@@ -1,10 +1,8 @@
 <?php
-global $db;
-
-use Core\Validator;
-
+$db = db();
 /** @var \Core\Db $db */
 
+use Core\Validator;
 
 $fillable = ['title', 'content', 'excerpt'];
 $data = load($fillable);

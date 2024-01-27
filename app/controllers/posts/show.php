@@ -1,6 +1,6 @@
 <?php
-global $db;
-/** @var Db $db */
+$db = db();
+/** @var \Core\Db $db */
 
 
 $id = $_GET['id'] ?? 0;

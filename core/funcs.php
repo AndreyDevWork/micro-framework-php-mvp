@@ -1,4 +1,5 @@
 <?php
+
 function dump($data)
 {
     echo "<pre>";
@@ -68,4 +69,9 @@ function get_alerts()
         require_once VIEWS . '/incs/alert_error.php';
         unset($_SESSION['error']);
     }
+}
+
+function db(): \Core\Db
+{
+    return \Core\App::get(\Core\Db::class);
 }

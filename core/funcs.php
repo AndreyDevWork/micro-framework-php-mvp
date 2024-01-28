@@ -75,3 +75,8 @@ function db(): \Core\Db
 {
     return \Core\App::get(\Core\Db::class);
 }
+
+function check_auth()
+{
+    return isset($_SESSION['auth']);
+}

@@ -1,8 +1,22 @@
 <?php
-/** @var \Core\Db $db */
+/** @var Db $db */
+
+use Core\Db;
+use Core\Pagination;
+
 $title = 'My Blog | Home';
 $db = db();
 
+$page = $_GET['page'] ?? 1;
+$perPage = 3;
+$total = $db->query('SELECT COUNT(*) FROM posts')->getColumn();
+$pagination = new Pagination((int)$page, $perPage, $total);
+
+$start = $pagination->getStart();
+print_arr($pagination);
+
+
+die();
 $posts = $db->query("SELECT * FROM posts ORDER BY id DESC")->findAll();
 $recentPosts = $db->query("SELECT * FROM posts ORDER BY id DESC LIMIT 3")->findAll();
 

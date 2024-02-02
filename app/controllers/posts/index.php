@@ -13,11 +13,8 @@ $total = $db->query('SELECT COUNT(*) FROM posts')->getColumn();
 $pagination = new Pagination((int)$page, $perPage, $total);
 
 $start = $pagination->getStart();
-print_arr($pagination);
 
-
-die();
-$posts = $db->query("SELECT * FROM posts ORDER BY id DESC")->findAll();
+$posts = $db->query("SELECT * FROM posts ORDER BY id DESC LIMIT $start, $perPage")->findAll();
 $recentPosts = $db->query("SELECT * FROM posts ORDER BY id DESC LIMIT 3")->findAll();
 
 require VIEWS . '/posts/index.tpl.php';

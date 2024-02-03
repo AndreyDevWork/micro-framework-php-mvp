@@ -6,20 +6,21 @@ class Validator
 {
     protected $errors = [];
     protected $data_items;
-    protected $rulesList = ['required', 'min', 'max', 'email', 'match'];
+    protected $rulesList = ['required', 'min', 'max', 'email', 'match', 'unique'];
     protected $messages = [
         'required' => 'The :fieldname: field is required',
         'min' => 'The :fieldname: field must be minimum :rulevalue: characters',
         'max' => 'The :fieldname: field must be maximum :rulevalue: characters',
         'email' => 'The :fieldname: is not valid email',
-        'match' => 'The :fieldname: field must match :rulevalue: field'
+        'match' => 'The :fieldname: field must match :rulevalue: field',
+        'unique' => 'The :fieldname: is already taken',
     ];
 
     public function validate(array $data = [], array $rules = [])
     {
         $this->data_items = $data;
         foreach ($data as $fieldname => $value) {
-            if(isset($rules[$fieldname])) {
+            if (isset($rules[$fieldname])) {
                 $this->check([
                     'fieldname' => $fieldname,
                     'value' => $value,
@@ -41,9 +42,9 @@ class Validator
 
                 if (!$result) {
                     $this->addError($field['fieldname'], str_replace(
-                        [':fieldname:', ':rulevalue:'],
-                        [$field['fieldname'], $ruleValue],
-                        $this->messages[$rule]
+                            [':fieldname:', ':rulevalue:'],
+                            [$field['fieldname'], $ruleValue],
+                            $this->messages[$rule]
                         )
                     );
                 }
@@ -51,7 +52,12 @@ class Validator
         }
     }
 
-    public function getErrors ()
+    protected function addError($fieldName, $error)
+    {
+        $this->errors[$fieldName][] = $error;
+    }
+
+    public function getErrors()
     {
         return $this->errors;
     }
@@ -66,18 +72,13 @@ class Validator
         $output = '';
         if (isset($this->errors[$fildname])) {
             $output .=
-            '<div class="invalid-feedback d-block"><ul class="list-unstyled">';
-                foreach ($this->errors[$fildname] as $error) {
-                    $output .= "<li>{$error}</li>";
-                }
+                '<div class="invalid-feedback d-block"><ul class="list-unstyled">';
+            foreach ($this->errors[$fildname] as $error) {
+                $output .= "<li>{$error}</li>";
+            }
             $output .= '</ul></div>';
         }
         return $output;
-    }
-
-    protected function addError($fieldName, $error)
-    {
-        $this->errors[$fieldName][] = $error;
     }
 
     protected function required($value, $ruleValue)
@@ -89,6 +90,7 @@ class Validator
     {
         return mb_strlen($value, 'UTF-8') >= $ruleValue;
     }
+
     protected function max($value, $ruleValue)
     {
         return mb_strlen($value, 'UTF-8') <= $ruleValue;
@@ -103,4 +105,11 @@ class Validator
     {
         return $value === $this->data_items[$ruleValue];
     }
+
+    protected function unique($value, $ruleValue)
+    {
+        $data = explode(':', $ruleValue);
+        return (!db()->query("SELECT {$data[1]} FROM {$data[0]} WHERE {$data[1]} = ?", [$value])->getColumn());
+    }
+
 }

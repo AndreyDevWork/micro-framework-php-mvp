@@ -1,10 +1,14 @@
 <?php
 
-/** @var \Core\Router $router */
+/** @var Router $router */
+
+use Core\Middleware\AuthMiddleware;
+use Core\Middleware\GuestMiddleware;
+use Core\Router;
 
 const MIDDLEWARE = [
-  'auth' => \Core\Middleware\AuthMiddleware::class,
-  'guest' =>   \Core\Middleware\GuestMiddleware::class
+    'auth' => AuthMiddleware::class,
+    'guest' => GuestMiddleware::class
 ];
 
 // Posts
@@ -19,6 +23,7 @@ $router->get('about', 'about.php');
 
 // User
 $router->get('register', 'users/register.php')->only('guest');
+$router->post('register', 'users/store.php')->only('guest');
 $router->get('login', 'users/login.php')->only('guest');
 $router->get('logout', 'users/logout.php');
 

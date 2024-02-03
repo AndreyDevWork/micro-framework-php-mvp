@@ -2,6 +2,8 @@
 
 namespace Core;
 
+use Exception;
+
 class Router
 {
     public $routes = [];
@@ -18,14 +20,14 @@ class Router
     {
         $matches = false;
         foreach ($this->routes as $route) {
-            if(($route['uri'] == $this->uri) && ($route['method'] == strtoupper($this->method))) {
+            if (($route['uri'] == $this->uri) && (in_array($this->method, $route['method']))) {
 
-                if($route['middleware']) {
+                if ($route['middleware']) {
                     $middleware = MIDDLEWARE[$route['middleware']] ?? false;
-                    if(!$middleware) {
-                        throw new \Exception("Incorrect middleware {$route['middleware']}");
+                    if (!$middleware) {
+                        throw new Exception("Incorrect middleware {$route['middleware']}");
                     }
-                    (new $middleware)->handle();
+                    (new $middleware())->handle();
                 }
 
                 require CONTROLLERS . "/{$route['controller']}";
@@ -34,7 +36,7 @@ class Router
             }
         }
 
-        if(!$matches) {
+        if (!$matches) {
             abort();
         }
     }
@@ -45,8 +47,19 @@ class Router
         return $this;
     }
 
+    public function get($uri, $controller)
+    {
+        return $this->add($uri, $controller, 'GET');
+    }
+
     public function add($uri, $controller, $method)
     {
+        if (is_array($method)) {
+            $method = array_map('strtoupper', $method);
+        } else {
+            $method = [$method];
+        }
+
         $this->routes[] = [
             'uri' => $uri,
             'controller' => $controller,
@@ -54,11 +67,6 @@ class Router
             'middleware' => null,
         ];
         return $this;
-    }
-
-    public function get($uri, $controller)
-    {
-        return $this->add($uri, $controller, 'GET');
     }
 
     public function post($uri, $controller)

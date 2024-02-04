@@ -1,6 +1,9 @@
 <?php
+
+use Core\Db;
+
 $db = db();
-/** @var \Core\Db $db */
+/** @var Db $db */
 
 
 $id = $_GET['id'] ?? 0;

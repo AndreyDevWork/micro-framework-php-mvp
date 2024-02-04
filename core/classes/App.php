@@ -6,18 +6,18 @@ class App
 {
     protected static $container;
 
-    public static function setContainer($container)
+    public static function get($service)
     {
-        static::$container = $container;
+        return static::getContainer()->getService($service);
     }
 
-    public static function getContainer(): \Core\ServiceContainer
+    public static function getContainer(): ServiceContainer
     {
         return static::$container;
     }
 
-    public static function get($service)
+    public static function setContainer($container)
     {
-        return static::getContainer()->getService($service);
+        static::$container = $container;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 define("ROOT", dirname(__DIR__, 1));
 define("WWW", ROOT . '/public');
 define("CORE", ROOT . '/core');

@@ -1,6 +1,6 @@
 <?php
-  /** @var Array $post */
-  require VIEWS . '/incs/header.php'
+/** @var Array $post */
+require VIEWS . '/incs/header.php'
 ?>
 
 <main class="main py-3">

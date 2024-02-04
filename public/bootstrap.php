@@ -1,6 +1,7 @@
 <?php
-use \Core\Db;
-use \Core\App;
+
+use Core\Db;
+use Core\App;
 
 $container = new \Core\ServiceContainer();
 

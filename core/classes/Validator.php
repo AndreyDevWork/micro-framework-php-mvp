@@ -41,7 +41,9 @@ class Validator
                 $result = $this->$methodName($value, $ruleValue);
 
                 if (!$result) {
-                    $this->addError($field['fieldname'], str_replace(
+                    $this->addError(
+                        $field['fieldname'],
+                        str_replace(
                             [':fieldname:', ':rulevalue:'],
                             [$field['fieldname'], $ruleValue],
                             $this->messages[$rule]

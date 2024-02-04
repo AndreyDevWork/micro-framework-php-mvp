@@ -14,13 +14,13 @@ class Pagination
         public int $page = 1,
         public int $perPage = 1,
         public int $total = 1,
-    )
-    {
+    ) {
         $this->countPages = $this->getCountPages();
         $this->currentPage = $this->getCurrentPage();
         $this->uri = $this->getParams();
         $this->midSize = $this->getMidSize();
     }
+
 
     protected function getCountPages(): int
     {

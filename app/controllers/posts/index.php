@@ -1,4 +1,5 @@
 <?php
+
 /** @var Db $db */
 
 use Core\Db;
@@ -10,7 +11,7 @@ $db = db();
 $page = $_GET['page'] ?? 1;
 $perPage = 3;
 $total = $db->query('SELECT COUNT(*) FROM posts')->getColumn();
-$pagination = new Pagination((int)$page, $perPage, $total);
+$pagination = new Pagination((int) $page, $perPage, $total);
 
 $start = $pagination->getStart();
 

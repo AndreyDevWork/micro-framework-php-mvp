@@ -1,4 +1,5 @@
 <?php
+
 $db = db();
 /** @var \Core\Db $db */
 

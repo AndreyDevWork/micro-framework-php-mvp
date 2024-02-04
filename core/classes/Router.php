@@ -79,5 +79,4 @@ class Router
         return $this->add($uri, $controller, 'DELETE');
     }
 
-
 }

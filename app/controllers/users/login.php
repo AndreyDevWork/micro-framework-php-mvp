@@ -1,4 +1,4 @@
 <?php
 
-$_SESSION['auth']['name'] = 'Andrey';
-redirect('/');
+$title = 'My Blog :: Login';
+require_once VIEWS . '/users/login.tpl.php';

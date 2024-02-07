@@ -38,6 +38,7 @@
 
         <ul class="navbar-nav mb-2 mb-lg-0">
             <?php if (check_auth()): ?>
+              <li class="nav-link"><?= $_SESSION['auth']['name'] ?></li>
               <li class="nav-item">
                 <a class="nav-link" href="logout">Logout</a>
               </li>

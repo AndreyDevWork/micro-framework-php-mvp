@@ -9,7 +9,14 @@ use Core\Validator;
 $db = App::get(Db::class);
 
 $fillable = ['name', 'email', 'password'];
+
 $data = load($fillable);
+
+if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === 0) {
+    $data['avatar'] = $_FILES['avatar'];
+} else {
+    $data['avatar'] = [];
+}
 
 $validator = new Validator();
 
@@ -28,14 +35,18 @@ $validation = $validator->validate($data, [
         'min' => 6,
         'max' => 100,
     ],
+    'avatar' => [
+        'required' => true,
+        'ext' => 'jpg|gif',
+        'size' => 1_048_576
+    ]
 ]);
-
 
 if (!$validation->hasErrors()) {
     $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
-    if ($db->query("INSERT INTO users (`name`, `email`, `password`) VALUES (:name, :email, :password)", $data)) {
-        $_SESSION['success'] = "Registered";
+    if ($db->query('INSERT INTO users (`name`, `email`, `password`) VALUES (:name, :email, :password)', $data)) {
+        $_SESSION['success'] = 'Registered';
     } else {
         $_SESSION['error'] = 'DB Error';
     }

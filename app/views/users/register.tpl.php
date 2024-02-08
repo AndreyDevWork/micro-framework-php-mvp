@@ -9,7 +9,12 @@ require VIEWS . '/incs/header.php'
       <div class="row">
         <div class="col-md-6 offset-md-3">
           <h3>Register page</h3>
-          <form action="" method="post">
+          <form action="" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="avatar" class="form-label">Avatar</label>
+              <input class="form-control" name="avatar" type="file" id="avatar">
+                <?= isset($validation) ? $validation->listErrors('avatar') : '' ?>
+            </div>
             <div class="mb-3">
               <label for="name" class="form-label">Name</label>
               <input name="name" type="text" class="form-control" id="name" placeholder="Name"

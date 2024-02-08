@@ -1,10 +1,13 @@
 <?php
 
+use Core\App;
+use Core\Db;
+
 function dump($data)
 {
-    echo "<pre>";
+    echo '<pre>';
     var_dump($data);
-    echo "</pre>";
+    echo '</pre>';
 }
 
 function dd($data)
@@ -20,12 +23,19 @@ function abort($code = 404, $title = '404 - Not found')
     die();
 }
 
-function load($fillable = [])
+function load($fillable = [], $post = true)
 {
+    $load_data = $post ? $_POST : $_GET;
     $data = [];
-    foreach ($_POST as $key => $value) {
-        if(in_array($key, $fillable)) {
-            $data[$key] = trim($value);
+    foreach ($fillable as $name) {
+        if (isset($load_data[$name])) {
+            if (!is_array($load_data[$name])) {
+                $data[$name] = trim($load_data[$name]);
+            } else {
+                $data[$name] = $load_data[$name];
+            }
+        } else {
+            $data[$name] = '';
         }
     }
     return $data;
@@ -43,7 +53,7 @@ function h($str)
 
 function redirect($url = '')
 {
-    if($url) {
+    if ($url) {
         $redirect = $url;
     } else {
         $redirect = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : PATH;
@@ -54,29 +64,36 @@ function redirect($url = '')
 
 function print_arr($data)
 {
-    echo "<pre>";
+    echo '<pre>';
     print_r($data);
-    echo "</pre>";
+    echo '</pre>';
 }
 
 function get_alerts()
 {
-    if(!empty($_SESSION['success'])) {
+    if (!empty($_SESSION['success'])) {
         require_once VIEWS . '/incs/alert_success.php';
         unset($_SESSION['success']);
     }
-    if(!empty($_SESSION['error'])) {
+    if (!empty($_SESSION['error'])) {
         require_once VIEWS . '/incs/alert_error.php';
         unset($_SESSION['error']);
     }
 }
 
-function db(): \Core\Db
+function db(): Db
 {
-    return \Core\App::get(\Core\Db::class);
+    return App::get(Db::class);
 }
 
 function check_auth()
 {
     return isset($_SESSION['auth']);
+}
+
+
+function get_file_ext($fileName)
+{
+    $fileExt = explode('.', $fileName);
+    return end($fileExt);
 }

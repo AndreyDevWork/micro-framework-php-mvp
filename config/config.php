@@ -2,6 +2,8 @@
 
 const ROOT = __DIR__ . '/..';
 const WWW = ROOT . '/public';
+
+const UPLOADS = WWW . '/uploads';
 const CORE = ROOT . '/core';
 const CONFIG = ROOT . '/config';
 const APP = ROOT . '/app';

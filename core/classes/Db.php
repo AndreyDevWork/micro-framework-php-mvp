@@ -12,7 +12,9 @@ final class Db
     private $connection;
     private PDOStatement $stmt;
 
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     public static function getInstance()
     {
@@ -22,7 +24,9 @@ final class Db
         return self::$instance;
     }
 
-    public function __wakeup() {}
+    public function __wakeup()
+    {
+    }
 
     public function getConnection(array $db_config)
     {
@@ -49,11 +53,10 @@ final class Db
             $this->stmt->execute($params);
             return $this;
         } catch (PDOException $e) {
-            error_log("[" . date('Y-m-d H:i:s') . "] DB Error: {$e->getMessage()}" . PHP_EOL, 3, ERRORS_LOG_FILE);
+            error_log('[' . date('Y-m-d H:i:s') . "] DB Error: {$e->getMessage()}" . PHP_EOL, 3, ERRORS_LOG_FILE);
             return false;
         }
     }
-
 
     public function findAll()
     {
@@ -84,5 +87,14 @@ final class Db
         return $this->stmt->fetchColumn();
     }
 
-    private function __clone() {}
+    public function getInsertId()
+    {
+        return $this->connection->lastInsertId();
+    }
+
+    private function __clone()
+    {
+    }
+
+
 }

@@ -2,6 +2,7 @@
 
 use Core\App;
 use Core\Db;
+use Core\Router;
 
 function dump($data)
 {
@@ -96,4 +97,14 @@ function get_file_ext($fileName)
 {
     $fileExt = explode('.', $fileName);
     return end($fileExt);
+}
+
+function routeParams(): array
+{
+    return Router::$routeParams;
+}
+
+function routeParam(string $key, $default = null)
+{
+    return Router::$routeParams[$key] ?? $default;
 }

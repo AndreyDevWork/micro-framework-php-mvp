@@ -12,9 +12,7 @@ final class Db
     private $connection;
     private PDOStatement $stmt;
 
-    private function __construct()
-    {
-    }
+    private function __construct() {}
 
     public static function getInstance()
     {
@@ -24,9 +22,7 @@ final class Db
         return self::$instance;
     }
 
-    public function __wakeup()
-    {
-    }
+    public function __wakeup() {}
 
     public function getConnection(array $db_config)
     {
@@ -92,9 +88,7 @@ final class Db
         return $this->connection->lastInsertId();
     }
 
-    private function __clone()
-    {
-    }
+    private function __clone() {}
 
 
 }

@@ -6,6 +6,7 @@ use Exception;
 
 class Router
 {
+    public static array $routeParams = [];
     public $routes = [];
     protected $uri;
     protected $method;
@@ -13,15 +14,23 @@ class Router
     public function __construct()
     {
         $this->uri = trim(parse_url($_SERVER['REQUEST_URI'])['path'], '/');
-        $this->method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+        $this->method = $this->getMethod();
+    }
+
+    /**
+     * @return mixed
+     */
+    protected function getMethod(): mixed
+    {
+        $method = $_POST['_method'] ?? $_SERVER['REQUEST_METHOD'];
+        return strtoupper($method);
     }
 
     public function match()
     {
         $matches = false;
         foreach ($this->routes as $route) {
-            if (($route['uri'] == $this->uri) && (in_array($this->method, $route['method']))) {
-
+            if ((preg_match("#^{$route['uri']}$#", $this->uri, $matches)) && (in_array($this->method, $route['method']))) {
                 if ($route['middleware']) {
                     $middleware = MIDDLEWARE[$route['middleware']] ?? false;
                     if (!$middleware) {
@@ -30,9 +39,15 @@ class Router
                     (new $middleware())->handle();
                 }
 
+                foreach ($matches as $k => $v) {
+                    if (is_string($k)) {
+                        self::$routeParams[$k] = $v;
+                    }
+                }
                 require CONTROLLERS . "/{$route['controller']}";
                 $matches = true;
                 break;
+
             }
         }
 
